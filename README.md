@@ -30,6 +30,10 @@ separately revocable credential with a spending ceiling you choose. That is by d
 New versions are pushed to this repository. Your box picks them up within a few minutes and
 shows an update on the app's tile, exactly as for any other app.
 
+Versions ending in `-rc1`, `-rc2`… are pre-releases: a pull request published for testing before
+it merges. They are built by the same workflow from the same repository, pinned by digest, and
+replaced by the numbered release once it ships.
+
 ## When the official listing lands
 
 The app id here is the same as the one submitted to the official App Store, so your data and
