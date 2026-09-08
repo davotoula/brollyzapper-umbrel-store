@@ -2,8 +2,8 @@ manifestVersion: 1
 id: brollyzapper
 category: bitcoin
 name: BrollyZapper
-version: "0.1.19"
-icon: https://raw.githubusercontent.com/davotoula/brollyzapper/v0.1.19/assets/icon.svg
+version: "0.1.20"
+icon: https://raw.githubusercontent.com/davotoula/brollyzapper/v0.1.20/assets/icon.svg
 tagline: Receive Nostr zaps and connect wallets to your own Lightning node
 description: >-
   BrollyZapper adds Nostr zap receiving (NIP-57) and Nostr Wallet Connect
@@ -41,9 +41,11 @@ description: >-
 # this stays empty — a lint that has to be deleted the week after it lands is
 # worse than the comment you are reading.
 releaseNotes: >-
-  A zap receipt publish no longer waits out a relay that is down: connecting is bounded at five
-  seconds per relay, the dead default relay.nostr.band is gone from the defaults, and the receipt
-  log line now says how long the publish took. Nothing to do on upgrade.
+  When a limit change is refused because the per-payment limit would sit above the 24-hour
+  one, the page now says which limit to move first, and a raise that could never apply is
+  refused before you fetch a confirmation code. A confirmation code you never use is cleared
+  when it expires. A zap receipt is only counted as accepted when a relay says so, and one
+  dead relay no longer delays the others. Nothing to do on upgrade.
 
 developer: davotoula
 website: https://github.com/davotoula/brollyzapper
