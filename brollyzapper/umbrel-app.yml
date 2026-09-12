@@ -2,8 +2,8 @@ manifestVersion: 1
 id: brollyzapper
 category: bitcoin
 name: BrollyZapper
-version: "0.1.20"
-icon: https://raw.githubusercontent.com/davotoula/brollyzapper/v0.1.20/assets/icon.svg
+version: "0.1.21"
+icon: https://raw.githubusercontent.com/davotoula/brollyzapper/v0.1.21/assets/icon.svg
 tagline: Receive Nostr zaps and connect wallets to your own Lightning node
 description: >-
   BrollyZapper adds Nostr zap receiving (NIP-57) and Nostr Wallet Connect
@@ -41,11 +41,11 @@ description: >-
 # this stays empty — a lint that has to be deleted the week after it lands is
 # worse than the comment you are reading.
 releaseNotes: >-
-  When a limit change is refused because the per-payment limit would sit above the 24-hour
-  one, the page now says which limit to move first, and a raise that could never apply is
-  refused before you fetch a confirmation code. A confirmation code you never use is cleared
-  when it expires. A zap receipt is only counted as accepted when a relay says so, and one
-  dead relay no longer delays the others. Nothing to do on upgrade.
+  Nothing changes for an Umbrel operator: the password stays managed by Umbrel, and the Node,
+  Security and Sending pages read as they did. Under the hood this release makes BrollyZapper
+  deployable on plain Docker beside any LND. Two failures such an install can hit now say what
+  to do, and asking for a second confirmation code records that the first was superseded.
+  Nothing to do on upgrade.
 
 developer: davotoula
 website: https://github.com/davotoula/brollyzapper

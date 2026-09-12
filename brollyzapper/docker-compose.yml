@@ -24,7 +24,7 @@ services:
   # admin.macaroon, and it listens on nothing: its sole input is a unix socket
   # in the shared credential volume (spec §3, §6).
   guard:
-    image: ghcr.io/davotoula/brollyzapper-guard:0.1.20@sha256:63bc04a51b5c1ddf87bc3cc597df9f03f0fa91b31a0644f0efdc5c780d5a0a6b
+    image: ghcr.io/davotoula/brollyzapper-guard:0.1.21@sha256:ef30751da667901970f09853b30df317af8ca36d2e32d400ea92dd1e5d2faad7
     user: "1000:1000"
     volumes:
       - ${APP_DATA_DIR}/data/guard:/guard
@@ -97,7 +97,7 @@ services:
   # admin.macaroon — adding that mount here would silently undo §3, §6 and half
   # of §11, which is what the lint exists to prevent.
   server:
-    image: ghcr.io/davotoula/brollyzapper:0.1.20@sha256:a175a274a3010702b0df9567aa31003cb342034505a17015ea2c2ecd2365baae
+    image: ghcr.io/davotoula/brollyzapper:0.1.21@sha256:5043c62f449d3d357e14514c84a215af7656b38210faa5a95711fe7e1737847c
     # The images run as uid 65532 (distroless/static:nonroot) by default, and
     # this line overrides that. umbrelOS creates ${APP_DATA_DIR} owned by
     # 1000:1000, so 1000 is the uid that can write the bind mounts — including
@@ -122,6 +122,15 @@ services:
       # (spec §7).
       TRUSTED_PROXIES: ${NETWORK_IP}/16
       ADMIN_PASSWORD: $APP_PASSWORD
+      # THE PLATFORM OWNS THAT PASSWORD, and this is the app being told so
+      # rather than guessing (`20i.5`). umbrelOS derives $APP_PASSWORD per
+      # install and displays it in its own UI, so Settings must not offer to
+      # change it — a change here would make umbrelOS's display silently wrong
+      # (§9). The app used to infer this from ADMIN_PASSWORD being set, which is
+      # also true of a plain-Docker operator who typed their own password into
+      # .env, and it denied them a password change for ever. Only this file
+      # sets it; deploy/lint_test.go refuses it in the plain-Docker template.
+      ADMIN_PASSWORD_MANAGED: "true"
       SESSION_SECRET: $APP_BROLLYZAPPER_SESSION_SECRET
     restart: on-failure
     stop_grace_period: 1m
