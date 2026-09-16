@@ -2,7 +2,7 @@ manifestVersion: 1
 id: brollyzapper
 category: bitcoin
 name: BrollyZapper
-version: "0.1.21"
+version: "0.1.22"
 icon: https://raw.githubusercontent.com/davotoula/brollyzapper/v0.1.21/assets/icon.svg
 tagline: Receive Nostr zaps and connect wallets to your own Lightning node
 description: >-
@@ -41,11 +41,11 @@ description: >-
 # this stays empty — a lint that has to be deleted the week after it lands is
 # worse than the comment you are reading.
 releaseNotes: >-
-  Nothing changes for an Umbrel operator: the password stays managed by Umbrel, and the Node,
-  Security and Sending pages read as they did. Under the hood this release makes BrollyZapper
-  deployable on plain Docker beside any LND. Two failures such an install can hit now say what
-  to do, and asking for a second confirmation code records that the first was superseded.
-  Nothing to do on upgrade.
+  A paired wallet can no longer flood your node: each connection is rate-limited, and a burst is
+  refused with the error the protocol defines. The Security page now says as of when each verdict
+  was true, and a check that could not run reads "not checked" instead of FAIL — it never blocks
+  sending and never reaches the banner. The receive credential gets the same four checks the
+  spend one had. There is a Sign out button. Nothing to do on upgrade.
 
 developer: davotoula
 website: https://github.com/davotoula/brollyzapper

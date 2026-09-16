@@ -24,7 +24,14 @@ services:
   # admin.macaroon, and it listens on nothing: its sole input is a unix socket
   # in the shared credential volume (spec §3, §6).
   guard:
-    image: ghcr.io/davotoula/brollyzapper-guard:0.1.21@sha256:ef30751da667901970f09853b30df317af8ca36d2e32d400ea92dd1e5d2faad7
+    image: ghcr.io/davotoula/brollyzapper-guard:0.1.22@sha256:8ddc9913d45530af663b436b3892bd9390f6554c86b5116bd1c5ae635e7d232e
+    # The images run as uid 65532 (distroless/static:nonroot) by default, and
+    # this line overrides that. umbrelOS creates ${APP_DATA_DIR} owned by
+    # 1000:1000, and the guard WRITES there: guard-state.json into data/guard,
+    # recv.macaroon and its socket into data/credentials. Leave it at the image
+    # default and the guard cannot write the macaroon on first run, which reads
+    # like a bake failure and is not. The server's user: line below is the same
+    # decision and must stay equal to this one.
     user: "1000:1000"
     volumes:
       - ${APP_DATA_DIR}/data/guard:/guard
@@ -97,7 +104,7 @@ services:
   # admin.macaroon — adding that mount here would silently undo §3, §6 and half
   # of §11, which is what the lint exists to prevent.
   server:
-    image: ghcr.io/davotoula/brollyzapper:0.1.21@sha256:5043c62f449d3d357e14514c84a215af7656b38210faa5a95711fe7e1737847c
+    image: ghcr.io/davotoula/brollyzapper:0.1.22@sha256:219d6e7134bed07a35c529182be68c234d846e210c2575bc9db56d624bbfb8b8
     # The images run as uid 65532 (distroless/static:nonroot) by default, and
     # this line overrides that. umbrelOS creates ${APP_DATA_DIR} owned by
     # 1000:1000, so 1000 is the uid that can write the bind mounts — including
